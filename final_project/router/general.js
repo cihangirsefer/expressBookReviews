@@ -75,6 +75,37 @@ public_users.get('/author/:author', async (req, res) => {
     }
 });
 
+// Get all books grouped by author
+public_users.get('/books-by-author', (req, res) => {
+    const booksByAuthor = {};
+
+    Object.values(books).forEach(book => {
+        const author = book.author;
+        if (!booksByAuthor[author]) {
+            booksByAuthor[author] = [];
+        }
+        booksByAuthor[author].push(book);
+    });
+
+    return res.status(200).json(booksByAuthor);
+});
+
+// Get all books grouped by title
+public_users.get('/books-by-title', (req, res) => {
+    const booksByTitle = {};
+
+    Object.values(books).forEach(book => {
+        const title = book.title;
+        if (!booksByTitle[title]) {
+            booksByTitle[title] = [];
+        }
+        booksByTitle[title].push(book);
+    });
+
+    return res.status(200).json(booksByTitle);
+});
+
+
 // Task 4 & Task 13: Get book details by title (Async/Await)
 public_users.get('/title/:title', async (req, res) => {
     const title = req.params.title.trim().toLowerCase();
